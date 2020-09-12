@@ -12,7 +12,9 @@ import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-import { fruitBaskets as allFruitBaskets } from "./data";
+import { fruitBasketsNames, calculateAverage } from "./data";
+
+const names = fruitBasketsNames();
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -25,19 +27,20 @@ export default function App() {
   const classes = useStyles();
 
   const [fruitBaskets, setFruitBaskets] = useState([
-    { fruitBasket: "" },
-    { fruitBasket: "" }
+    { name: "" },
+    { name: "" }
   ]);
 
   const handleTextFieldFruitBasketChange = (event, index) => {
+
     const value = event.target.value;
     const list = [...fruitBaskets];
-    list[index]["fruitBasket"] = value;
+    list[index]["name"] = value;
     setFruitBaskets(list);
   };
 
   const handleAddClick = () => {
-    setFruitBaskets([...fruitBaskets, { fruitBasket: "" }]);
+    setFruitBaskets([...fruitBaskets, { name: "" }]);
   };
 
   const handleRemoveClick = index => {
@@ -47,7 +50,8 @@ export default function App() {
   };
 
   const handleCalculateAverage = async () => {
-    console.log("handleCalculateAverage presed");
+    const string = calculateAverage(fruitBaskets);
+    console.log(string);
   };
 
   return (
@@ -62,11 +66,11 @@ export default function App() {
               className={classes.textField}
               label="fruit basket"
               select
-              value={x.fruitBasket}
+              value={x.name}
               onChange={e => handleTextFieldFruitBasketChange(e, i)}
             >
               {" "}
-              {allFruitBaskets.map(option => (
+              {names.map(option => (
                 <MenuItem key={option.name} value={option.name}>
                   {option.name}
                 </MenuItem>
