@@ -61,19 +61,17 @@ export const calculateAverage = selectedFruitBaskets => {
     return acc;
   }, {});
 
-  console.log("basketSum", basketSum);
 
   //average
   const basketAverage = Object.keys(basketSum).map(fruitName => {
-    console.log("fruitName", fruitName);
+
     const item = basketSum[fruitName];
     return {
       fruitName: item.fruitName,
       averageCountOverall: item.sum / basketCounts,
-      averageCountWithMinOne: item.sum / item.countInBaskets
+      averageCountWithMinOne: item.sum / item.countInBaskets,
+      sum: item.sum
     };
   });
-  console.log("basketAverage", basketAverage);
-
-  return "resturn";
+  return basketAverage;
 };
