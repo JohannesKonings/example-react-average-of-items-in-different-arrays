@@ -45,44 +45,35 @@ export const calculateAverage = selectedFruitBaskets => {
     fruits.push(found.fruitBasket);
   });
 
-  //let result = fruits[0].map((fruit, idx) => console.log("fruit", fruit, "idx", idx));
+  const basketCounts = fruits.length;
 
-  console.log("fruits", fruits);
-
-  const result = [].concat(...fruits);
+  const mergedBasket = [].concat(...fruits);
 
   //sum
-  console.log("result", result);
-
-  /* const sum = result.reduce((acc, curr) => {
-    acc[curr.fruitName] ? (acc[curr.fruitName] += curr.count) : (acc[curr.fruitName] = curr.count);
+  const basketSum = mergedBasket.reduce((acc, curr) => {
+    if (!acc[curr.fruitName]) {
+      acc[curr.fruitName] = { ...curr, countInBaskets: 1, sum: curr.count };
       return acc;
-  }, {}); */
-
-  const reduced = result.reduce(function(m, d) {
-    if (!m[d.fruitName]) {
-      m[d.fruitName] = { ...d, count: 1 };
-      return m;
     }
-    //https://stackoverflow.com/questions/51040651/group-by-and-calculate-mean-average-of-properties-in-a-javascript-array
-    console.log("count", d.count);
-    m[d.fruitName].sumi += d.count;
-    m[d.fruitName].count += 1;
+    acc[curr.fruitName].countInBaskets += 1;
+    acc[curr.fruitName].sum += curr.count;
 
-    return m;
+    return acc;
   }, {});
 
-  console.log("reduced", reduced);
+  console.log("basketSum", basketSum);
 
   //average
-  const average = Object.keys(reduced).map(function(k) {
-    const item = reduced[k];
+  const basketAverage = Object.keys(basketSum).map(fruitName => {
+    console.log("fruitName", fruitName);
+    const item = basketSum[fruitName];
     return {
       fruitName: item.fruitName,
-      averageCount: item.reduced / item.countInArray
+      averageCountOverall: item.sum / basketCounts,
+      averageCountWithMinOne: item.sum / item.countInBaskets
     };
   });
-  console.log("average", average);
+  console.log("basketAverage", basketAverage);
 
   return "resturn";
 };
