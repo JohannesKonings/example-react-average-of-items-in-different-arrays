@@ -38,6 +38,7 @@ export const fruitBasketsNames = () => {
 export const calculateAverage = selectedFruitBaskets => {
   let fruits = [];
 
+  //merge
   selectedFruitBaskets.forEach(selectedFruitBasket => {
     const found = fruitBaskets.find(
       fruitBasket => fruitBasket.name === selectedFruitBasket.name
@@ -61,10 +62,8 @@ export const calculateAverage = selectedFruitBaskets => {
     return acc;
   }, {});
 
-
   //average
   const basketAverage = Object.keys(basketSum).map(fruitName => {
-
     const item = basketSum[fruitName];
     return {
       fruitName: item.fruitName,
